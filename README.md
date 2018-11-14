@@ -25,8 +25,8 @@ Optional: The lighting(effect) can be changed to your liking.
 ## Things you need
 
 - Zapier Account connected with your Google Calendar 
-- Adafruit
-- ESP6288 Board
+- Adafruit account
+- ESP6288 Board (with an included micro-usb)
 - LED Strip
 
 
@@ -42,19 +42,15 @@ Optional: The lighting(effect) can be changed to your liking.
 
 ### Setup
 
-De libraries die included moeten worden
+Setting up 
 
-> Including
+> Set up the network credentials
 
 ```shell
 #include "config.h"
-
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
-
 ```
 
-> Neopixel library, Adafruit connectie met feed en benodigde variabelen aanmaken
+> With this code you are including the needed libraries and setting up the LED strip. In this example, I used pin D5 to connect the DIN part of my LED strip.
 
 ```shell
 #include "Adafruit_NeoPixel.h"
@@ -63,6 +59,13 @@ De libraries die included moeten worden
 #define PIXEL_COUNT   24
 #define PIXEL_TYPE    NEO_GRB + NEO_KHZ800
 
+```
+
+> Here we define "pixels" as the strip we are selecting. Fill in your Adafruit account name and AIO key, which you can get here:
+https://cdn-learn.adafruit.com/assets/assets/000/059/031/medium800/microcontrollers_view-aio-key.png?1533923510
+https://cdn-learn.adafruit.com/assets/assets/000/026/949/medium800/adafruit_io_iokey.png?1438620851
+
+```
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
 
 #define FEED_OWNER "{yourusername}"
@@ -70,20 +73,8 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE)
 AdafruitIO_Feed *sharedFeed = io.feed("{yourkey}", FEED_OWNER);
 ```
 
-> Setup van de Buienradar API
 
-```shell
-// set up the `sharedFeed`
-const char* server = "http://gpsgadget.buienradar.nl/data/raintext/";
-const char* lat = "?lat=52.36";
-const char* lon = "&lon=4.91";
-
-int rainData[] = {
-  100, 200, 000, 000, 000, 000, 000, 000
-};
-```
-
-### Buienradar
+### Setup
 
 > de void setup(); om de connectie weer te geven in je serial monitor
 
