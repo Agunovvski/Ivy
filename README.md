@@ -64,8 +64,7 @@ Setting up
 
 
 > Here we define "pixels" as the strip we are selecting. Fill in your Adafruit account name and AIO key, which you can get here:
-![microcontrollers](https://cdn-learn.adafruit.com/assets/assets/000/059/031/medium800/microcontrollers_view-aio-key.png)
-![iokey](https://cdn-learn.adafruit.com/assets/assets/000/026/949/medium800/adafruit_io_iokey.png)
+![iokeyandusername](https://cdn-learn.adafruit.com/assets/assets/000/059/032/medium800/microcontrollers_aio-popup-window.png?1533923653)
 
 ```
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
