@@ -75,9 +75,9 @@ AdafruitIO_Feed *sharedFeed = io.feed("{yourkey}", FEED_OWNER);
 ```
 
 
-### Setup
+### Make to connection to Adafruit and give status updates
 
-> de void setup(); om de connectie weer te geven in je serial monitor
+> This is done within the setup();
 
 ```shell
 void setup() {
