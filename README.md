@@ -1,4 +1,4 @@
-# How to connect Adafruit with Arduino to receive data
+# How to trigger a LED strip whenever a new agenda event is created via Zapier
 
 > Arduino Ivy Calendar with Zapier, written by Agung Tarumampen ET1 2018
 
@@ -44,10 +44,24 @@ Optional: The lighting(effect) can be changed to your liking.
 
 Setting up 
 
-> Set up the network credentials
+> Set up the network credentials. You need your username and AIO key which can be found: ![iokeyandusername](https://cdn-learn.adafruit.com/assets/assets/000/059/032/medium800/microcontrollers_aio-popup-window.png?1533923653)
 
 ```shell
 #include "config.h"
+```
+
+```shell
+#define IO_USERNAME    "{Name}"
+#define IO_KEY         "{KEY}"
+
+/******************************* WIFI **************************************/
+
+#define WIFI_SSID       "{Wifi login}"
+#define WIFI_PASS       "{Wifi password}"
+
+// comment out the following two lines if you are using fona or ethernet
+#include "AdafruitIO_WiFi.h"
+AdafruitIO_WiFi io(IO_USERNAME, IO_KEY, WIFI_SSID, WIFI_PASS);
 ```
 
 
@@ -63,8 +77,7 @@ Setting up
 ```
 
 
-> Here we define "pixels" as the strip we are selecting. Fill in your Adafruit account name and AIO key, which you can get here:
-![iokeyandusername](https://cdn-learn.adafruit.com/assets/assets/000/059/032/medium800/microcontrollers_aio-popup-window.png?1533923653)
+> Here we define "pixels" as the strip. Fill in your Adafruit account name and the name of the feed, which you used in Zapier.
 
 ```
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
@@ -111,7 +124,7 @@ void setup() {
 
 
   pixels.begin();
-  pixels.show();
+  pixels.show(); // initialize the strip to start the effect
 
 }
 ```
@@ -177,11 +190,14 @@ void colorWipe(uint32_t c, uint8_t wait) {
 
 ## FAQ
 
-- **LEDstrip brandt Rood**
-    - Dat betekent dat het geen connectie kan maken. Check je netwerk connectie in de <configure.h> tab.
+- **No results in my Serial Monitor?**
+    - Make sure that your serial connection is set to 115200 baud, which can be found: ![serialconnection](https://www.maxphi.com/wp-content/uploads/2017/08/gps-data-serial-monitor2.png)
 
-- **LEDstrip blijft op "het blijft regenen", maar is geen enkel druppel te zien**
-    - Check of de Buienradar API link klopt met wat er is vermeld.
+- **Serial Monitor only prints ".....", continuously**
+    - Check if the network credentials are right in the config.h
+
+- **What happened? Once I am connected the light suddenly flashes**
+    - This happens because it read though your last value it was given in Adafruit. That happened to be 1, which also is the same value which is needed to trigger the light effect event.
 
 
 ---
