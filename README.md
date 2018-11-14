@@ -2,59 +2,38 @@
 
 > Arduino Ivy Calendar with Zapier, written by Agung Tarumampen ET1 2018
 
-Met deze opdracht gaan we door middel van Zapier data versturen naar Adafruit om vervolgens met Arduino data op te halen van de Buienradar API. Als output krijgen we kleureneffect te zien via een LEDstrip gebaseerd op of het lekker droog blijft, het gaat binnen een half uur gaat regenen of het continu zal blijven regenen.
-Dit krijgen we te zien elk uur. 
+After you made a Zap that connects to your Adafruit feed with Zapier, you can start sending data to the feed and trigger specific functions.
 
-Optioneel: De trigger is naar eigen preference te veranderen naar bijvoorbeeld: twitter, instagram en allerlei andere apps.
+In this example, we will light up a LED strip whenever an Agenda Event is created through Zapier.
+
+Optional: The lighting(effect) can be changed to your liking.
 
 
 ---
 
 
-## Inhoudsopgave
+## Table of Contents
 
-- [Benodigdheden](#benodigdheden)
-- [Zapier en Adafruit](#zapierenadafruitsetup)
-- [Installatie](#installatie)
+- [Things you need](#thingsyouneed)
+- [Installation](#installation)
 - [FAQ](#faq)
 
 
 ---
 
 
-## Benodigdheden
+## Things you need
 
-- Arduino
+- Zapier Account connected with your Google Calendar 
+- Adafruit
 - ESP6288 Board
-- Buienradar API
-- Zapier Account
-- Optioneel: twitter acccount
+- LED Strip
 
 
 ---
 
 
-## Zapier en Adafruit setup
-
-### Stap 1 - Zapier setup
-
-- Maak een Zapier account aan en maak een Zap aan! https://zapier.com/learn/getting-started-guide/build-zap-workflow
-
-### Stap 2 - Adafruit setup
-
-- In Adafruit maak je een account aan
-- Daarin maak je een feed en onthoudt je de feed key
-- In Adafruit heb je je AIO Key, die je nodig hebt om de koppeling te maken tussen Adafruit en Arduino
-
-### Stap 3 - Zapier en Adafruit link
-
-- In Zapier link je Adafruit aan arduino d.m.v. https://docs.google.com/document/d/1KvKUJE_4mgKk9AfHR9K_8wLWQh2QyTWSqcO_cVrfCGk/edit?usp=drive_web&ouid=108835577367122712922
-
-
----
-
-
-## Installatie
+## Installation
 
 > Libaries om te installeren via de library manager
 
