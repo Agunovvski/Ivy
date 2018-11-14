@@ -116,9 +116,9 @@ void setup() {
 }
 ```
 
-### Stap 1 - void loop()
+### Step 1 - Initiate the sketch
 
-> In de void loop(); draait alleen 1 functie: de functie om de adafruit connectie te maken
+> io.run(); is required for all sketches. it should always be present at the top of your loop function. it keeps the client connected to io.adafruit.com, and processes any incoming data.
 
 ```shell
 void loop() {
@@ -126,104 +126,47 @@ void loop() {
 }
 ```
 
-### Stap 2 - void handleMessage(), void getRainData(), void extractDataFromAPI(), void evaluateRain() 
+### Step 2 - getting the data and what to with it
 
-> handleMessage(), deze functie wordt aangeroepen wanneer 'sharedFeed' feed message is binnengekomen van Adafruit IO.
+> This function, which is placed outside of the loop function,  is called whenever an 'sharedFeed' feed message is received from Adafruit IO. It is attached to the name of  your feed in the setup() function above.
 
 ```shell
-void handleMessage(AdafruitIO_Data *data){
-  if(data->toInt()==1){
-    Serial.print("Waarde 1 binnengekregen");
-    getRainData(server, lat, lon);    // binnenhalen van de regendata van de website van buienradar
-    evaluateRain(); // kijk in die data of het gaat regenen
-    delay(20000);
-    for(int i=0; i<PIXEL_COUNT; ++i) {
+void handleMessage(AdafruitIO_Data *data) {
+
+  Serial.print("received <-  ");
+  Serial.println(data->toString());
+  Serial.println(data->toInt()); // Give the exact data adafruit is getting, convert it into a string and serial print it
+
+   if(data->toInt()==1){
+    Serial.print("Er is een event gemaakt!");
+    colorWipe(pixels.Color(0, 255, 255), 50); // run a color effect to show that an agendaevent is created by Zapier
+    delay(10000); // wait 10 seconds for it to
+    for(int i=0; i<PIXEL_COUNT; ++i) { // clear all pixels
     pixels.clear();
   }
+  Serial.println("LED UIT");
   } 
-  else{
-    Serial.print("Clear");
+  else{ // when necessary add a random value to reset the strip
+    Serial.print("Refresh");
     for(int i=0; i<PIXEL_COUNT; ++i) {
     pixels.clear();
+  } 
   }
-  }
-  pixels.show();
+
+  pixels.show(); // turns the strip on
+  
 }
 ```
 
-> getRainData(), functie voor het binnenhalen van de inhoud van de pagina van buienradar
 
-```shell
-void getRainData(String server, String lat, String lon) {
-  String url = server + lat + lon;
-  Serial.println("Loading: " + url);
-
-  HTTPClient http;
-  http.begin(url); //HTTP
-  int httpCode = http.GET();
-  if (httpCode > 0) {
-    if (httpCode == HTTP_CODE_OK) {
-      Serial.println("HTTP OK");
-      String payload = http.getString();
-      extractDataFromAPI(payload);
-
-      colorWipe(pixels.Color(255, 255, 0), 50); //blue-white flash (update succes)
-      delay(1000);
-      return;
-    }
-  } else {
-    Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
-    http.end();
-    colorWipe(pixels.Color(255, 0, 0), 50); 
-    delay(1000);
-    return;
-  }
-
-}
-```
-
-> extractDataFromAPI(), deze functie zet de html pagina (string) om naar bruikbare data
-
-```shell
-void extractDataFromAPI(String data) {
-  int iterarions = 8;
-  for (int i = 0; i < iterarions; i++ ) {
-    int subStringStart = i * 11;
-    int subStringEnd = i * 11 + 3;
-    rainData[i] = data.substring(subStringStart, subStringEnd).toInt();
-    Serial.println(rainData[i]);
-  }
-}
-```
-
-> evaluateRain(), deze functie kijkt naar de binnengehaalde data en stel de kleur in aan de hand van deze data
-
-```shell
-void evaluateRain() {
-  if (rainData[0] + rainData[1] + rainData[2] <= 15) {
-    //regent niet
-    colorWipe(pixels.Color(0, 255, 0), 50); 
-    Serial.println("Lekker Droog");
-  }  else if (rainData[0] + rainData[1] + rainData[2] < 150) {
-    //regent komende half uur
-     colorWipe(pixels.Color(0, 255, 255), 50); 
-    Serial.println("Er is regen");
-  } else {
-    //regent continue
-     colorWipe(pixels.Color(0, 0, 255), 50);
-    Serial.println("Het blijft regenen!");
-  }
-}
-```
-
-> colorWipe(), kleureneffect voor data
+> The function Colorwipe() loops and turns on each individual pixels one by one fast.
 
 ```shell
 void colorWipe(uint32_t c, uint8_t wait) {
-  for(uint16_t i=0; i<pixels.numPixels(); i++) {
-    pixels.setPixelColor(i, c);
-    pixels.show();
-    delay(wait);
+  for(uint16_t i=0; i<pixels.numPixels(); i++) { // loop through all of the pixels on the strip
+    pixels.setPixelColor(i, c); // set the color of the strip to be whatever rgb color we want
+    pixels.show(); // turns the strip on
+    delay(wait); // wait until the end of the loop
   }  
 }
 ```
