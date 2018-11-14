@@ -50,6 +50,7 @@ Setting up
 #include "config.h"
 ```
 
+
 > With this code you are including the needed libraries and setting up the LED strip. In this example, I used pin D5 to connect the DIN part of my LED strip.
 
 ```shell
@@ -61,9 +62,10 @@ Setting up
 
 ```
 
+
 > Here we define "pixels" as the strip we are selecting. Fill in your Adafruit account name and AIO key, which you can get here:
-https://cdn-learn.adafruit.com/assets/assets/000/059/031/medium800/microcontrollers_view-aio-key.png?1533923510
-https://cdn-learn.adafruit.com/assets/assets/000/026/949/medium800/adafruit_io_iokey.png?1438620851
+https://cdn-learn.adafruit.com/assets/assets/000/059/031/medium800/microcontrollers_view-aio-key.png
+https://cdn-learn.adafruit.com/assets/assets/000/026/949/medium800/adafruit_io_iokey.png
 
 ```
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
