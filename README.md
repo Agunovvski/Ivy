@@ -35,7 +35,7 @@ Optional: The lighting(effect) can be changed to your liking.
 
 ## Installation
 
-> Libaries om te installeren via de library manager
+> These are the mandatory libraries to be installed
 
 - Adafruit_NeoPixel
 - Adafruit IO Arduino
