@@ -8,6 +8,8 @@ In this example, we will light up a LED strip whenever an Agenda Event is create
 
 Optional: The lighting(effect) can be changed to your liking.
 
+The setup for linking Zapier, Adafruit and the following code, you to beforehand complete this guide: https://github.com/Floris97/Ivy/blob/master/README.md
+
 
 ---
 
